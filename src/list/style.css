@@ -1,0 +1,71 @@
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 1400px;
+  height: 80px;
+}
+.container{
+  height: 400px;
+}
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+.addItem{
+    position: relative;
+    padding-bottom: 0px;
+    height: 40px;
+}
+.addText{
+   height: 30px;
+   width: 220px;
+}
+.addItem button{
+   height: 30px;
+   width: 80px;
+}
+.w-35 {
+    width: 35%;
+  }
+.w-60{
+    width: 60%;
+}
+.md-dialog-container{
+    width: 50px;
+}
+.flexfix {
+    flex-shrink: 0;
+    flex-basis: auto;
+  }
+  .md-dialog-container {
+    position: absolute;
+  }
+  
+  md-dialog {
+    max-width: 400px;
+    max-height: 300px;
+  }
+
+.dialogdemoBasicUsage #popupContainer {
+  position: relative; }
+
+.dialogdemoBasicUsage .footer {
+  width: 100%;
+  text-align: center;
+  margin-left: 20px; }
+
+.dialogdemoBasicUsage .footer, .dialogdemoBasicUsage .footer > code {
+  font-size: 0.8em;
+  margin-top: 50px; }
+
+.dialogdemoBasicUsage button {
+  width: 200px; }
+
+.dialogdemoBasicUsage div#status {
+  color: #c60008; }
+
+.dialogdemoBasicUsage .dialog-demo-prerendered md-checkbox {
+  margin-bottom: 0; }
+  
+  

@@ -1,0 +1,22 @@
+{
+  "items": [
+    {
+      "id": 1,
+      "name": "234",
+      "price": 234,
+      "description": "32445"
+    },
+    {
+      "id": 2,
+      "name": "cvc",
+      "price": 232132,
+      "description": "dsfdsfdsf"
+    },
+    {
+      "id": 3,
+      "name": "232",
+      "price": 3432,
+      "description": "xcvxcv"
+    }
+  ]
+}
