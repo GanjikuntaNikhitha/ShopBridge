@@ -6,5 +6,5 @@ app.get('*',function(req,res){
     res.sendFile(__dirname + "/src/list/list.html")
 });
 app.listen(port,function() {
-    console.log("Sever Listening on port" + port)
+    console.log("Sever Listening on port " + port)
 })

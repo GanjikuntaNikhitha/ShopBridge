@@ -1,10 +1,12 @@
-angular.module("latestDialogApp", ["ngMaterial", "ngMessages"])
+angular
+  .module("latestDialogApp", ["ngMaterial", "ngMessages"])
 
   .controller("AppController", function ($scope, $mdDialog, $http, $timeout) {
     $scope.TestString = "App Has been initialted";
     $scope.showAddItem = false;
     $scope.showAddItemModal = function (ev) {
       $scope.showAddItem = true;
+      $scope.editInfo = {};
       $mdDialog.show({
         contentElement: "#myDialog",
         // Appending dialog to document.body to cover sidenav in docs app
@@ -32,11 +34,13 @@ angular.module("latestDialogApp", ["ngMaterial", "ngMessages"])
           showLoader: true,
         }).then(
           ({ data }) => {
-            console.log(method+ " "+"data.....  " + JSON.stringify(data));
+            console.log(method + " " + "data.....  " + JSON.stringify(data));
             resolve(data);
           },
           (err) => {
-            console.log(method+ " "+"data.Error.....  " + JSON.stringify(err));
+            console.log(
+              method + " " + "data.Error.....  " + JSON.stringify(err)
+            );
             errorMessage(err);
             reject(err);
           }
@@ -44,15 +48,15 @@ angular.module("latestDialogApp", ["ngMaterial", "ngMessages"])
       });
     };
 
-    const errorMessage = (error) =>{
-      if(error.data.includes("Insert failed, duplicate id")){
-        let id = error.config.data.id
-        $scope.errorMsg = `Item with id ${id} already exists`;
+    const errorMessage = (error) => {
+      if (error.data.includes("Insert failed, duplicate id")) {
+        let id = error.config.data.id;
+        $scope.errorMsg = `Item with Id ${id} already exists`;
         $timeout(() => {
           delete $scope.errorMsg;
-        }, 6000)
+        }, 6000);
       }
-    }
+    };
 
     $scope.getItems = function () {
       createRequest("get", url).then((data) => {
@@ -65,7 +69,10 @@ angular.module("latestDialogApp", ["ngMaterial", "ngMessages"])
     $scope.getItems();
 
     $scope.addItem = function () {
-      createRequest("post", url, $scope.editInfo)
+      createRequest("post", url, $scope.editInfo).then(() => {
+        $scope.hide();
+        $scope.getItems();
+      });
     };
 
     $scope.showEditModal = function (index) {
@@ -90,11 +97,16 @@ angular.module("latestDialogApp", ["ngMaterial", "ngMessages"])
       }
     };
     $scope.editItem = function () {
-      createRequest("put", url, $scope.editInfo, $scope.editInfo.id);
+      createRequest("put", url, $scope.editInfo, $scope.editInfo.id).then(() => {
+        $scope.hide();
+        $scope.getItems();
+      });
     };
 
     $scope.deleteItem = function (index) {
       $scope.editInfo = JSON.parse(JSON.stringify($scope.items[index]));
-      createRequest("delete", url, $scope.editInfo, $scope.editInfo.id);
+      createRequest("delete", url, $scope.editInfo, $scope.editInfo.id).then(() => {
+        $scope.getItems();
+      });
     };
   });

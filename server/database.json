@@ -2,21 +2,27 @@
   "items": [
     {
       "id": 1,
-      "name": "234",
-      "price": 234,
-      "description": "32445"
+      "name": "Dell E1916HV 18.5-inch LED Backlit",
+      "price": 6250,
+      "description": "Vibrant and Crystal Clear Display"
     },
     {
       "id": 2,
-      "name": "cvc",
-      "price": 232132,
-      "description": "dsfdsfdsf"
+      "name": "EGate LED Projector",
+      "price": 6990,
+      "description": "Curated for Ease & Peace of Mind"
     },
     {
       "id": 3,
-      "name": "232",
-      "price": 3432,
-      "description": "xcvxcv"
+      "name": "OnePlus Nord 5G",
+      "price": 29999,
+      "description": "48MP+8MP+5MP+2MP quad rear camera"
+    },
+    {
+      "id": 4,
+      "name": "New Apple iPhone 12",
+      "price": 70900,
+      "description": "6.1-inch (15.5 cm diagonal)"
     }
   ]
 }

@@ -5,7 +5,7 @@
   "main": "List.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "api": "json-server --watch ./server/database.json",
+    "database": "json-server --watch ./server/database.json",
     "server": "node server.js"
   },
   "author": "Nikhita Reddy",
