@@ -26,54 +26,68 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
     integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
     crossorigin="anonymous"></script>
-    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-1.3.2.js"></script>
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+  <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-1.3.2.js"></script>
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
   <!-- List js file accessing -->
   <script src="./List.js"></script>
   <!-- style sheet accessing -->
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.2.1/angular-material.min.css" />
   <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css" />
 </head>
 
 <body>
   <div ng-app="latestDialogApp" ng-controller="AppController">
-    <div style="background-color: burlywood;height: 70px;">
-      <h1 style="text-align: center;">Shop Bridge</h1>
-    </div>
+    <header>
+      <div class="header">
+        <h2>Shop Bridge</h2>
+      </div>
+    </header>
 
-  </br>
-  
-  <div layout="row" flex class="ml">
+    </br>
+
+    <div layout="row" flex class="ml">
       <md-input-container md-no-float>
-    <input placeholder="Search" aria-label="primary no float" ng-model="searchtxt" type="text" class="input-search"/>
+        <input placeholder="Search" aria-label="primary no float" ng-model="searchtxt" type="text"
+          class="input-search" />
       </md-input-container>
-      <span >
-        <img  src="./search.svg" alt="searchtext">
+      <span>
+        <img src="./search.svg" alt="searchtext">
       </span>
-
-  </div>
+      <div class="addDiv">
+        <md-button class="md-warn fw8 mv3" type="button" ng-click="showAddItemModal()">
+          ADD NEW ITEM
+        </md-button>
+      </div>
+    </div>
 
     <table cellspacing="0">
       <thead>
         <tr>
           <th class="w-70px" ng-click="sort('id')">No
-          <span class="glyphicon sort-icon" ng-show="sortKey=='id'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>     
+            <span class="glyphicon sort-icon" ng-show="sortKey=='id'"
+              ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
           </th>
           <th ng-click="sort('name')">Name
-          <span class="glyphicon sort-icon" ng-show="sortKey=='name'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>     
+            <span class="glyphicon sort-icon" ng-show="sortKey=='name'"
+              ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
           </th>
           <th ng-click="sort('price')">Price
-          <span class="glyphicon sort-icon" ng-show="sortKey=='price'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>     
+            <span class="glyphicon sort-icon" ng-show="sortKey=='price'"
+              ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
           </th>
           <th ng-click="sort('description')">Description
-          <span class="glyphicon sort-icon" ng-show="sortKey=='Description'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>     
+            <span class="glyphicon sort-icon" ng-show="sortKey=='Description'"
+              ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
           </th>
           <th>Edit Item</th>
           <th>Delete Item</th>
         </tr>
+
       </thead>
       <tbody>
-        <tr ng-repeat="item in items |orderBy:sortKey:reverse|filter:searchtxt">
+        <tr
+          ng-repeat="item in items |orderBy:sortKey:reverse|filter:searchtxt| filter:q | startFrom:currentPage*pageSize | limitTo:pageSize">
           <td class="fw7 w-70px">{{item.id}}</td>
           <td class="fw7 w-70px">{{item.name}}</td>
           <td class="fw7">&#8377; {{item.price|number:2}}</td>
@@ -84,7 +98,7 @@
           </td>
 
           <td class="fw7">
-            <md-button class="md-raised md-accent" name="button" ng-click="deleteItem($index)">DELETE</md-button>
+            <md-button class="md-accent md-raised md-hue-2" name="button" ng-click="deleteItem($index)">DELETE</md-button>
           </td>
         </tr>
         <tr ng-if="!items.length">
@@ -94,49 +108,56 @@
         </tr>
       </tbody>
     </table>
-    <div class="flex justify-end align-center bw b ml" style="margin-left: 40px;">
-      <md-button class="md-warn fw8 mv3" type="button" ng-click="showAddItemModal()">
-        ADD NEW ITEM
+    <div class="pagination">
+      <md-button class="md-warn md-raised md-hue-1" ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
+        Previous
+      </md-button>
+      {{currentPage+1}}/{{numberOfPages()}}
+      <md-button class="md-warn md-raised md-hue-1" ng-disabled="currentPage >= getData().length/pageSize - 1"
+        ng-click="currentPage=currentPage+1">
+        Next
       </md-button>
     </div>
+    <footer>
+    </footer>
     <!-- insert new item -->
     <div style="visibility: hidden">
       <div class="md-dialog-container" id="myDialog">
         <md-dialog layout-padding>
           <form ng-submit="addItem()" class="mb0">
-            <h2 >Add New Item</h2>
+            <h2>Add New Item</h2>
             <div class="flex-row ">
               <label>Id</label>
               <span>:</span>
-              <div >
+              <div>
                 <input class="input ml3 black fw7" placeholder="Enter item No." type="number" min="0"
                   ng-keypress="isNumber($event)" ng-model="editInfo.id" required />
               </div>
             </div>
-            <div >
-              <label >Name</label>
+            <div>
+              <label>Name</label>
               <span>:</span>
-              <div >
+              <div>
                 <input class="input ml3 black fw7" placeholder="Enter Name" ng-model="editInfo.name" required />
               </div>
             </div>
             <div>
-              <label >Price</label>
+              <label>Price</label>
               <span>:</span>
-              <div >
+              <div>
                 <input class="input ml3 black fw7" placeholder="Enter Amount" type="number"
                   ng-keypress="isNumber($event)" min="0" ng-model="editInfo.price" required />
               </div>
             </div>
-            <div >
-              <label >Description</label>
+            <div>
+              <label>Description</label>
               <span>:</span>
-              <div >
+              <div>
                 <input class="input ml3 black fw7" placeholder="Add Description" type="text"
                   ng-model="editInfo.description" required />
               </div>
             </div>
-            <div >
+            <div>
               <md-button class="md-warn fw9 mt3 mh0" type="button" ng-click="hide()">
                 CANCEL
               </md-button>
@@ -157,34 +178,34 @@
         <md-dialog layout-padding>
           <form ng-submit="editItem()" class="mb0">
             <h2>Edit Item</h2>
-            <div >
+            <div>
               <label class="fw7 f5 w-40" for="">Id</label>
               <span>:</span>
-              <div >
+              <div>
                 <input class="input ml3 black fw7" placeholder="Enter item No." disabled ng-model="editInfo.id"
                   required />
               </div>
             </div>
-            <div >
-              <label >Name</label>
+            <div>
+              <label>Name</label>
               <span>:</span>
               <div>
                 <input class="input ml3 black fw7" placeholder="Enter Name" type="text" ng-model="editInfo.name"
                   required />
               </div>
             </div>
-            <div >
+            <div>
               <label class="fw7 f5 w-40" for="">Price</label>
               <span>:</span>
-              <div >
+              <div>
                 <input class="input ml3 black fw7" placeholder="Enter Amount" type="number"
                   ng-keypress="isNumber($event)" min="0" ng-model="editInfo.price" required />
               </div>
             </div>
-            <div >
+            <div>
               <label class="fw7 f5 w-40" for="">Description</label>
               <span>:</span>
-              <div >
+              <div>
                 <input class="input ml3 black fw7" placeholder="Add Description" type="text"
                   ng-model="editInfo.description" required />
               </div>

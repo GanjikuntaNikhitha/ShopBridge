@@ -85,5 +85,36 @@ td, th {
 
 .dialogdemoBasicUsage .dialog-demo-prerendered md-checkbox {
   margin-bottom: 0; }
-  
+
+.pagination { 
+  padding: 0 6px 0 6px;
+  margin: 6px 8px 6px 35px;
+  }
+
+ .addDiv{
+  position: absolute;
+  right: 456px;
+  margin-top: 15px;
+ }
+ header {
+  background-color: #5cdb95;
+  height: 70px;
+  padding: 30px;
+  text-align: center;
+  font-size: 60px;
+  color: black;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+/* Style the footer */
+footer {
+  background-color: #5cdb95;
+  padding: 10px;
+  text-align: center;
+  color: white;
+  height: 50px;
+}
+.header{
+  margin-top: -33px;
+}
+
   

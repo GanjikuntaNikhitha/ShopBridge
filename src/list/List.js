@@ -1,7 +1,7 @@
 angular
   .module("latestDialogApp", ["ngMaterial", "ngMessages","ui.bootstrap"])
 
-  .controller("AppController", function ($scope, $mdDialog, $http, $timeout) {
+  .controller("AppController", function ($scope, $mdDialog, $http, $timeout, $filter) {
     $scope.TestString = "App Has been initialted";
     $scope.showAddItem = false;
     $scope.showAddItemModal = function (ev) {
@@ -109,9 +109,26 @@ angular
         $scope.getItems();
       });
     };
-    $scope.sort= function(keyname){
-      console.log(keyname + "keyname..")
+    $scope.sort = function (keyname) {
       $scope.sortKey = keyname;
-      $scope.reverse= !$scope.reverse;
+      $scope.reverse = !$scope.reverse;
+    }
+    $scope.currentPage = 0;
+    $scope.pageSize = 10;
+    $scope.q = '';
+
+    $scope.getData = function () {
+      return $filter('filter')($scope.items, $scope.q)
+    }
+
+    $scope.numberOfPages = function () {
+      if (!$scope.getData() || !$scope.getData().length) { return; }
+      return Math.ceil($scope.getData().length / $scope.pageSize);
+    }
+  }).filter('startFrom', function () {
+    return function (input, start) {
+      if (!input || !input.length) { return; }
+      start = +start; 
+      return input.slice(start);
     }
   });
