@@ -1,5 +1,5 @@
 angular
-  .module("latestDialogApp", ["ngMaterial", "ngMessages"])
+  .module("latestDialogApp", ["ngMaterial", "ngMessages","ui.bootstrap"])
 
   .controller("AppController", function ($scope, $mdDialog, $http, $timeout) {
     $scope.TestString = "App Has been initialted";
@@ -109,4 +109,9 @@ angular
         $scope.getItems();
       });
     };
+    $scope.sort= function(keyname){
+      console.log(keyname + "keyname..")
+      $scope.sortKey = keyname;
+      $scope.reverse= !$scope.reverse;
+    }
   });

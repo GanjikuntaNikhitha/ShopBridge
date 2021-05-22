@@ -3,6 +3,21 @@ table {
   border-collapse: collapse;
   width: 1400px;
   height: 80px;
+  margin-left: 40px;
+}
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+  [class*="col-"] {
+    width: 100%;
+  }
+}
+img{
+    width: 30px;
+    margin-top: 24px;
+}
+.input-search{
+  font-weight: bold;
+
 }
 .container{
   height: 400px;
@@ -30,6 +45,9 @@ td, th {
   }
 .w-60{
     width: 60%;
+}
+.ml{
+ margin-left: 40px
 }
 .md-dialog-container{
     width: 50px;

@@ -11,6 +11,7 @@
   "author": "Nikhita Reddy",
   "license": "ISC",
   "dependencies": {
+    "bootstrap": "^5.0.1",
     "express": "^4.17.1",
     "http-server": "^0.12.3",
     "json-server": "^0.16.3"

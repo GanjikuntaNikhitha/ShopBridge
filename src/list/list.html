@@ -26,14 +26,13 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
     integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
     crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-    crossorigin="anonymous"></script>
+    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-1.3.2.js"></script>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
   <!-- List js file accessing -->
   <script src="./List.js"></script>
   <!-- style sheet accessing -->
   <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.2.1/angular-material.min.css" />
+  <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css" />
 </head>
 
 <body>
@@ -43,19 +42,38 @@
     </div>
 
   </br>
+  
+  <div layout="row" flex class="ml">
+      <md-input-container md-no-float>
+    <input placeholder="Search" aria-label="primary no float" ng-model="searchtxt" type="text" class="input-search"/>
+      </md-input-container>
+      <span >
+        <img  src="./search.svg" alt="searchtext">
+      </span>
+
+  </div>
+
     <table cellspacing="0">
       <thead>
         <tr>
-          <th class="w-70px">No</th>
-          <th>Name</th>
-          <th>Price</th>
-          <th>Description</th>
+          <th class="w-70px" ng-click="sort('id')">No
+          <span class="glyphicon sort-icon" ng-show="sortKey=='id'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>     
+          </th>
+          <th ng-click="sort('name')">Name
+          <span class="glyphicon sort-icon" ng-show="sortKey=='name'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>     
+          </th>
+          <th ng-click="sort('price')">Price
+          <span class="glyphicon sort-icon" ng-show="sortKey=='price'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>     
+          </th>
+          <th ng-click="sort('description')">Description
+          <span class="glyphicon sort-icon" ng-show="sortKey=='Description'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>     
+          </th>
           <th>Edit Item</th>
           <th>Delete Item</th>
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="item in items track by $index">
+        <tr ng-repeat="item in items |orderBy:sortKey:reverse|filter:searchtxt">
           <td class="fw7 w-70px">{{item.id}}</td>
           <td class="fw7 w-70px">{{item.name}}</td>
           <td class="fw7">&#8377; {{item.price|number:2}}</td>
@@ -76,7 +94,7 @@
         </tr>
       </tbody>
     </table>
-    <div class="flex justify-end align-center bw b">
+    <div class="flex justify-end align-center bw b ml" style="margin-left: 40px;">
       <md-button class="md-warn fw8 mv3" type="button" ng-click="showAddItemModal()">
         ADD NEW ITEM
       </md-button>

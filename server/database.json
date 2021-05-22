@@ -15,14 +15,14 @@
     {
       "id": 3,
       "name": "OnePlus Nord 5G",
-      "price": 29999,
-      "description": "48MP+8MP+5MP+2MP quad rear camera"
+      "price": 70900,
+      "description": "6.1-inch (15.5 cm diagonal)"
     },
     {
       "id": 4,
       "name": "New Apple iPhone 12",
-      "price": 70900,
-      "description": "6.1-inch (15.5 cm diagonal)"
+      "price": 29999,
+      "description": "48MP+8MP+5MP+2MP quad rear camera"
     }
   ]
 }
