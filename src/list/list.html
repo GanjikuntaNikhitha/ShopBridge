@@ -94,11 +94,11 @@
           <td class="fw7">{{item.description}}</td>
 
           <td class="fw7">
-            <md-button class="md-raised md-primary" name="button" ng-click="showEditModal($index)">EDIT</md-button>
+            <md-button class="md-raised md-primary" name="button" ng-click="showEditModal(item)">EDIT</md-button>
           </td>
 
           <td class="fw7">
-            <md-button class="md-accent md-raised md-hue-2" name="button" ng-click="deleteItem($index)">DELETE</md-button>
+            <md-button class="md-accent md-raised md-hue-2" name="button" ng-click="showDeleteModal(item)">DELETE</md-button>
           </td>
         </tr>
         <tr ng-if="!items.length">
@@ -118,8 +118,6 @@
         Next
       </md-button>
     </div>
-    <footer>
-    </footer>
     <!-- insert new item -->
     <div style="visibility: hidden">
       <div class="md-dialog-container" id="myDialog">
@@ -131,7 +129,7 @@
               <span>:</span>
               <div>
                 <input class="input ml3 black fw7" placeholder="Enter item No." type="number" min="0"
-                  ng-keypress="isNumber($event)" ng-model="editInfo.id" required />
+                  ng-keypress="isNumber($event)" ng-model="editInfo.id" ng-disabled =true />
               </div>
             </div>
             <div>
@@ -220,6 +218,24 @@
               </md-button>
             </div>
           </form>
+        </md-dialog>
+      </div>
+    </div>
+
+    <div style="visibility: hidden">
+      <div class="md-dialog-container" id="myDialogDelete">
+        <md-dialog layout-padding class="w-35 pa3">
+          <div class="f5 fw7 pv3" >Are you sure, You want to delete item ?
+          </div>
+          <div class="flex justify-end align-center">
+            <md-button class="md-warn fw9 mt3 mh0" type="button" ng-click="hide()">
+              CLOSE
+            </md-button>
+            <md-button class="md-primary fw9 mt3 mh0"
+            ng-click="deleteItem($index)">
+              CONFIRM
+            </md-button>
+          </div>
         </md-dialog>
       </div>
     </div>

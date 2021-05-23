@@ -93,7 +93,7 @@ td, th {
 
  .addDiv{
   position: absolute;
-  right: 456px;
+  right: 160px;
   margin-top: 15px;
  }
  header {
@@ -104,14 +104,6 @@ td, th {
   font-size: 60px;
   color: black;
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-}
-/* Style the footer */
-footer {
-  background-color: #5cdb95;
-  padding: 10px;
-  text-align: center;
-  color: white;
-  height: 50px;
 }
 .header{
   margin-top: -33px;

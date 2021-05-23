@@ -1,12 +1,15 @@
 angular
-  .module("latestDialogApp", ["ngMaterial", "ngMessages","ui.bootstrap"])
+  .module("latestDialogApp", ["ngMaterial", "ngMessages", "ui.bootstrap"])
 
   .controller("AppController", function ($scope, $mdDialog, $http, $timeout, $filter) {
     $scope.TestString = "App Has been initialted";
     $scope.showAddItem = false;
     $scope.showAddItemModal = function (ev) {
       $scope.showAddItem = true;
-      $scope.editInfo = {};
+      let itemsLength = ($scope.items.length-1)
+      let lastItem = $scope.items[itemsLength]
+      $scope.items
+      $scope.editInfo = {id:(lastItem.id+1)};
       $mdDialog.show({
         contentElement: "#myDialog",
         // Appending dialog to document.body to cover sidenav in docs app
@@ -16,15 +19,42 @@ angular
         clickOutsideToClose: true,
       });
     };
+    $scope.itemId;
+
+    $scope.showEditModal = function (item) {
+      $scope.itemId = item.id
+      $scope.editInfo = JSON.parse(JSON.stringify($scope.items[($scope.itemId-1)]));
+      $mdDialog.show({
+        contentElement: "#myDialogEdit",
+        parent: angular.element(document.body),
+        clickOutsideToClose: true,
+      });
+    };
+
+  
+
+    $scope.showDeleteModal = function (item) {
+      console.log('index....'+item.id)
+      $scope.itemId = item.id
+      $scope.modalMode = 'delete';
+      $mdDialog.show({
+        contentElement: "#myDialogDelete",
+        parent: angular.element(document.body),
+        clickOutsideToClose: true,
+      });
+    };
+
     $scope.hide = function () {
       $mdDialog.hide();
     };
+
     $scope.cancel = function () {
       $mdDialog.cancel();
     };
+
     const url = "http://localhost:3000/items";
 
-    var createRequest = function (method, url, data = null, id = null) {
+    var createRequest = function (method, url, data, id) {
       if (id) url = `${url}/${id}`;
       return new Promise((resolve, reject) => {
         $http({
@@ -34,7 +64,6 @@ angular
           showLoader: true,
         }).then(
           ({ data }) => {
-            console.log(method + " " + "data.....  " + JSON.stringify(data));
             resolve(data);
           },
           (err) => {
@@ -62,10 +91,10 @@ angular
       createRequest("get", url).then((data) => {
         $timeout(() => {
           $scope.items = data;
-          console.log($scope.items);
         });
       });
     };
+
     $scope.getItems();
 
     $scope.addItem = function () {
@@ -75,14 +104,6 @@ angular
       });
     };
 
-    $scope.showEditModal = function (index) {
-      $scope.editInfo = JSON.parse(JSON.stringify($scope.items[index]));
-      $mdDialog.show({
-        contentElement: "#myDialogEdit",
-        parent: angular.element(document.body),
-        clickOutsideToClose: true,
-      });
-    };
     $scope.isNumber = function (evt) {
       evt = evt ? evt : window.event;
       let charCode = evt.which ? evt.which : evt.keyCode;
@@ -96,25 +117,28 @@ angular
         return true;
       }
     };
+
     $scope.editItem = function () {
-      createRequest("put", url, $scope.editInfo, $scope.editInfo.id).then(() => {
+      createRequest("put", url, $scope.editInfo, $scope.itemId).then(() => {
         $scope.hide();
         $scope.getItems();
       });
     };
 
-    $scope.deleteItem = function (index) {
-      $scope.editInfo = JSON.parse(JSON.stringify($scope.items[index]));
-      createRequest("delete", url, $scope.editInfo, $scope.editInfo.id).then(() => {
+    $scope.deleteItem = function () {
+      createRequest("delete", url,undefined ,$scope.itemId).then(() => {
+        $scope.hide();
         $scope.getItems();
       });
     };
+
     $scope.sort = function (keyname) {
       $scope.sortKey = keyname;
       $scope.reverse = !$scope.reverse;
     }
+
     $scope.currentPage = 0;
-    $scope.pageSize = 10;
+    $scope.pageSize = 7;
     $scope.q = '';
 
     $scope.getData = function () {
@@ -125,10 +149,11 @@ angular
       if (!$scope.getData() || !$scope.getData().length) { return; }
       return Math.ceil($scope.getData().length / $scope.pageSize);
     }
+
   }).filter('startFrom', function () {
     return function (input, start) {
       if (!input || !input.length) { return; }
-      start = +start; 
+      start = +start;
       return input.slice(start);
     }
   });
